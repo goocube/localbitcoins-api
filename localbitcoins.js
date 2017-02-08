@@ -1,10 +1,10 @@
 var request = require('request')
-var crypto		= require('crypto');
+var crypto = require('crypto');
 var querystring	= require('querystring');
 
 
 function LBCClient(key, secret, otp) {
-	var nonce = new Date() * 1000;
+	// var nonce = new Date() * 1000;
 	var self = this;
 
 	var config = {
@@ -30,7 +30,8 @@ function LBCClient(key, secret, otp) {
 			'dashboard', 'dashboard/released', 'dashboard/canceled', 'dashboard/closed',
 			'dashboard/released/buyer', 'dashboard/canceled/buyer', 'dashboard/closed/buyer',
 			'dashboard/released/seller', 'dashboard/canceled/seller', 'dashboard/closed/seller',
-			'wallet-send', 'wallet', 'contact_info'
+			'wallet-send', 'wallet', 'contact_info', 'notifications', 'recent_messages', 'contact_release',
+			'contact_message_post', 'pincode', 'contact_messages'
 			]
 		};
 		if(methods.public.indexOf(method) !== -1) {
@@ -74,6 +75,7 @@ function LBCClient(key, secret, otp) {
 	 * @return {Object}            The request object
 	 */
 	function privateMethod(method, params, ad_id, callback) {
+		var nonce = new Date() * 1000 * 1000;
 		params = params || {};
 
 		var path;
@@ -126,9 +128,10 @@ function LBCClient(key, secret, otp) {
     var gets = ['ad-get', 'dashboard', 'dashboard/released', 'dashboard/canceled',
     'dashboard/closed', 'dashboard/released/buyer', 'dashboard/canceled/buyer',
     'dashboard/closed/buyer', 'dashboard/released/seller', 'dashboard/canceled/seller',
-    'dashboard/closed/seller', 'wallet', 'contact_info'];
+    'dashboard/closed/seller', 'wallet', 'contact_info', 'contact_messages'];
     var posts = [ 'ad-get/ad_id', 'myself', 'ads',
-    'wallet-send', 'wallet-balance', 'wallet-addr'];
+    'wallet-send', 'wallet-balance', 'wallet-addr', 'contact_release',
+	'contact_message_post', 'pincode'];
 
     if (posts.indexOf(method) !== -1) {
 
