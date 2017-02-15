@@ -2,24 +2,6 @@ var request = require('request')
 var crypto = require('crypto');
 var querystring	= require('querystring');
 
-var g_nonce = new (function() {
-
-    this.generate = function() {
-
-        var now = Date.now();
-
-        this.counter = (now === this.last? this.counter + 1 : 0);
-        this.last    = now;
-
-        // add padding to nonce
-        var padding = 
-            this.counter < 10 ? '000' : 
-                this.counter < 100 ? '00' :
-                    this.counter < 1000 ?  '0' : '';
-
-        return now+padding+this.counter;
-    };
-})();
 
 function LBCClient(key, secret, otp) {
 	// var nonce = new Date() * 1000;
@@ -93,8 +75,7 @@ function LBCClient(key, secret, otp) {
 	 * @return {Object}            The request object
 	 */
 	function privateMethod(method, params, ad_id, callback) {
-		//var nonce = new Date() * 1000 * 1000;
-		var nonce = g_nonce.generate();
+		var nonce = new Date() * 1000 * 1000;
 		params = params || {};
 
 		var path;
