@@ -2,7 +2,7 @@ var request = require('request')
 var crypto = require('crypto');
 var querystring	= require('querystring');
 
-var nonce = new (function() {
+var g_nonce = new (function() {
 
     this.generate = function() {
 
@@ -94,7 +94,7 @@ function LBCClient(key, secret, otp) {
 	 */
 	function privateMethod(method, params, ad_id, callback) {
 		//var nonce = new Date() * 1000 * 1000;
-		var nonce = nonce.generate();
+		var nonce = g_nonce.generate();
 		params = params || {};
 
 		var path;
